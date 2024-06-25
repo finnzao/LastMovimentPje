@@ -28,17 +28,13 @@ async function selectProfile(driver, wait, profile) {
     const dropdown = await wait(until.elementLocated(By.className('dropdown-toggle')));
     await dropdown.click();
     // Localiza todos os links dentro da tabela de perfis
-    const profileLinks = await driver.findElements(By.css('#papeisUsuarioForm\\:dtPerfil\\:tb a'));
+    await driver.wait(until.elementLocated(By.id('papeisUsuarioForm:j_id58')), 10000);
 
-    // Itera sobre todos os links encontrados
-    for (let link of profileLinks) {
-        const linkText = await link.getText();
+    // Encontra o link com o texto desejado
+    let profile = await driver.findElement(By.xpath("//a[contains(text(), 'V DOS FEITOS DE REL DE CONS CIV E COMERCIAIS DE RIO REAL / Assessoria / Assessor')]"));
 
-        // Verifica se o texto do link contém o texto do perfil desejado
-        if (linkText.includes(profile)) {
-            await link.click();
-        }
-    }
+    // Clica no link
+    await profile.click();
 }
 
 async function searchProcess(driver, wait, classeJudicial = '', nomeParte = '', numOrgaoJustica = '0216', numeroOAB = '', estadoOAB = '') {
